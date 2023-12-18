@@ -1,0 +1,31 @@
+#!/bin/sh
+
+dhuser="hackstaff"
+language=pl
+
+get_version() {
+  echo $1 | cut -d"/" -f3
+}
+
+get_language() {
+  echo $1 | cut -d"/" -f2
+}
+
+get_hash() {
+  md5sum $1 | cut -d" " -f1
+}
+
+build() {
+  dockerfile=$1
+  version=$(get_version $dockerfile)
+  language=$(get_language $dockerfile)
+  hash=$(get_hash $dockerfile)
+  working_dir=$(echo "${dockerfile%/*}")
+  image_name="${dhuser}/${language}:${version}"
+  docker build $working_dir -t $image_name
+}
+
+for dockerfile in $(find $language -name Dockerfile) 
+do 
+  build $dockerfile
+done
