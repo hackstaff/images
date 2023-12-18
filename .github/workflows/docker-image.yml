@@ -1,0 +1,12 @@
+name: Docker Images
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  build-docker-images:
+    runs-on: ubuntu-latest
+    steps:
+      - run: ./util/build
+
