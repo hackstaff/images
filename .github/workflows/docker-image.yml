@@ -8,5 +8,7 @@ jobs:
   build-docker-images:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out the repository to the runner
+        uses: actions/checkout@v4  
       - run: ./util/build
 
